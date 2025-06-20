@@ -24,7 +24,6 @@
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
 
-
     <servlet>
         <servlet-name>ComplaintServlet</servlet-name>
         <servlet-class>lk.gdse.cms.controller.ComplaintServlet</servlet-class>
@@ -44,6 +43,16 @@
     <servlet-mapping>
         <servlet-name>DeleteComplaintServlet</servlet-name>
         <url-pattern>/DeleteComplaintServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateComplaintServlet</servlet-name>
+        <servlet-class>lk.gdse.cms.controller.UpdateComplaintServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateComplaintServlet</servlet-name>
+        <url-pattern>/UpdateComplaintServlet</url-pattern>
     </servlet-mapping>
 
 </web-app>

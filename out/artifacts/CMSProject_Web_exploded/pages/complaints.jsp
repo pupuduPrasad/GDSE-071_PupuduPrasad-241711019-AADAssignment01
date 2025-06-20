@@ -29,6 +29,7 @@
                 <th>ID</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tbody>
@@ -37,6 +38,14 @@
                 <td><%= c.getId() %></td>
                 <td><%= c.getTitle() %></td>
                 <td><%= c.getDescription() %></td>
+                <td>
+                        <span class="badge
+                            <%= "Pending".equalsIgnoreCase(c.getStatus()) ? "bg-warning text-dark" :
+                                "Resolved".equalsIgnoreCase(c.getStatus()) ? "bg-success" :
+                                "bg-secondary" %>">
+                            <%= c.getStatus() %>
+                        </span>
+                </td>
             </tr>
             <% } %>
             </tbody>

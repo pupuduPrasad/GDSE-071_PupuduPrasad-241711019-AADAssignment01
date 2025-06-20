@@ -6,7 +6,7 @@ import java.util.*;
 
 public class ComplaintDAO {
 
-    // Generate complaint id .
+    // Generate complaint id
     public static String generateComplaintId() {
         String prefix = "COM";
         String sql = "SELECT id FROM complaints WHERE id LIKE 'COM%' ORDER BY id DESC LIMIT 1";
@@ -33,13 +33,15 @@ public class ComplaintDAO {
     // Save complaint
     public static void saveComplaint(Complaint complaint) {
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
-            String sql = "INSERT INTO complaints (id, title, description, user_id) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO complaints (id, title, description, user_id, status) VALUES (?, ?, ?, ?,'Pending')";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, complaint.getId());
             stmt.setString(2, complaint.getTitle());
             stmt.setString(3, complaint.getDescription());
             stmt.setInt(4, complaint.getUserId());
+//            stmt.setString(5, complaint.getStatus());
+//            stmt.setString(6, complaint.getRemarks());
 
             stmt.executeUpdate();
 
@@ -48,7 +50,7 @@ public class ComplaintDAO {
         }
     }
 
-    // Retrieve complaints
+    // Retrieve complaints by user ID
     public static List<Complaint> getComplaintsByUserId(int userId) {
         List<Complaint> list = new ArrayList<>();
         try (Connection conn = DBConnection.getDataSource().getConnection();
@@ -62,8 +64,9 @@ public class ComplaintDAO {
                         rs.getString("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getInt("user_id")
-//                        rs.getString("status")
+                        rs.getInt("user_id"),
+                        rs.getString("status"),
+                        rs.getString("remarks")
                 );
                 list.add(c);
             }
@@ -73,7 +76,7 @@ public class ComplaintDAO {
         return list;
     }
 
-    // Retrieve all complaints admin
+    // Retrieve all complaints (for admin)
     public static List<Complaint> getAllComplaints() {
         List<Complaint> complaints = new ArrayList<>();
         String sql = "SELECT * FROM complaints";
@@ -87,8 +90,9 @@ public class ComplaintDAO {
                         rs.getString("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getInt("user_id")
-//                        rs.getString("status")
+                        rs.getInt("user_id"),
+                        rs.getString("status"),
+                        rs.getString("remarks")
                 );
                 complaints.add(c);
             }
@@ -100,11 +104,26 @@ public class ComplaintDAO {
         return complaints;
     }
 
-    // Delete complaint ID
+    // Delete complaint by ID
     public static boolean deleteComplaintById(String id) {
         try (Connection conn = DBConnection.getDataSource().getConnection();
              PreparedStatement ps = conn.prepareStatement("DELETE FROM complaints WHERE id = ?")) {
             ps.setString(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Update status and remarks
+    public static boolean updateStatusAndRemarks(String id, String status, String remarks) {
+        String sql = "UPDATE complaints SET status = ?, remarks = ? WHERE id = ?";
+        try (Connection conn = DBConnection.getDataSource().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setString(2, remarks);
+            ps.setString(3, id);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
