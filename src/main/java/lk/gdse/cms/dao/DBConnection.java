@@ -8,7 +8,7 @@ public class DBConnection {
     private static final BasicDataSource bds = new BasicDataSource();
 
     static {
-        bds.setUrl("jdbc:mysql://localhost:3306/complaint_db");
+        bds.setUrl("jdbc:mysql://localhost:3306/complaint_mngs");
         bds.setUsername("root");
         bds.setPassword("Ijse@1234");
         bds.setDriverClassName("com.mysql.cj.jdbc.Driver");
