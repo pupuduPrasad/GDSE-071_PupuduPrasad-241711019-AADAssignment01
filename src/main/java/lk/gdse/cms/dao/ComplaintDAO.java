@@ -33,14 +33,13 @@ public class ComplaintDAO {
     // Save complaint
     public static void saveComplaint(Complaint complaint) {
         try (Connection conn = DBConnection.getDataSource().getConnection()) {
-            String sql = "INSERT INTO complaints (id, title, description, user_id, status) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO complaints (id, title, description, user_id) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, complaint.getId());
             stmt.setString(2, complaint.getTitle());
             stmt.setString(3, complaint.getDescription());
             stmt.setInt(4, complaint.getUserId());
-            stmt.setString(5, complaint.getStatus());
 
             stmt.executeUpdate();
 
@@ -63,8 +62,8 @@ public class ComplaintDAO {
                         rs.getString("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getInt("user_id"),
-                        rs.getString("status")
+                        rs.getInt("user_id")
+//                        rs.getString("status")
                 );
                 list.add(c);
             }
@@ -88,8 +87,8 @@ public class ComplaintDAO {
                         rs.getString("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getInt("user_id"),
-                        rs.getString("status")
+                        rs.getInt("user_id")
+//                        rs.getString("status")
                 );
                 complaints.add(c);
             }

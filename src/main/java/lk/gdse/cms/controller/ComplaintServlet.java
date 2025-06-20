@@ -24,7 +24,7 @@ public class ComplaintServlet extends HttpServlet {
 
             String generatedId = ComplaintDAO.generateComplaintId();
 
-            Complaint c = new Complaint(generatedId, title, description, user.getId(), "Pending");
+            Complaint c = new Complaint(generatedId, title, description, user.getId());
             ComplaintDAO.saveComplaint(c);
 
             res.sendRedirect("pages/complaints.jsp");

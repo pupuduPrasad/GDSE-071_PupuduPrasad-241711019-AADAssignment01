@@ -46,7 +46,6 @@
                 <td><%= c.getTitle() %></td>
                 <td><%= c.getDescription() %></td>
                 <td><%= c.getUserId() %></td>
-                <td><span class="badge bg-info text-dark"><%= c.getStatus() %></span></td>
                 <td class="text-center">
                     <form action="../DeleteComplaintServlet" method="post" class="d-inline"
                           onsubmit="return confirmDelete(event, '<%= c.getId() %>')">
