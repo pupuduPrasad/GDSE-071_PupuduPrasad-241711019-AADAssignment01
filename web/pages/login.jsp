@@ -92,7 +92,6 @@
     </style>
 </head>
 <body>
-<%--login--%>
 <div class="login-container">
     <h2>Login</h2>
     <form method="post" action="../LoginServlet">
